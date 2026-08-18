@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ชั้นหนังสือออนไลน์ ป.5</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        📚 <div>
+            <h2>ชั้นหนังสือออนไลน์</h2>
+            <small>Online Bookshelf ชั้นประถมศึกษาปีที่ 5</small>
+        </div>
+    </div>
+
+    <input type="text" id="searchBox" placeholder="ค้นหาหนังสือ...">
+
+    <div class="profile">👩‍🏫 ครูผู้สอน</div>
+</header>
+
+<section class="banner">
+    <h1>ชั้นหนังสือ ชั้นประถมศึกษาปีที่ 5</h1>
+    <p>คลังสื่อการเรียนรู้ดิจิทัล โรงเรียนบ้านชายทะเลโคกขามมิตรภาพที่ 95</p>
+</section>
+
+<div class="toolbar">
+    <select>
+        <option>ทุกหมวดหมู่</option>
+    </select>
+
+    <button>+ อัปโหลดหนังสือ</button>
+</div>
+
+<main class="bookshelf" id="bookshelf"></main>
+
+<!-- PDF VIEWER -->
+
+<div id="viewer">
+
+<div class="viewer-header">
+    <button onclick="closeBook()">← กลับ</button>
+    <h3 id="bookTitle"></h3>
+</div>
+
+<iframe id="pdfFrame"></iframe>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
