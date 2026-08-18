@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ชั้นหนังสือออนไลน์ ป.5</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        📚 <div>
+            <h2>ชั้นหนังสือออนไลน์</h2>
+            <small>Online Bookshelf ชั้นประถมศึกษาปีที่ 5</small>
+        </div>
+    </div>
+
+    <input type="text" id="searchBox" placeholder="ค้นหาหนังสือ...">
+
+    <div class="profile">👩‍🏫 ครูผู้สอน</div>
+</header>
+
+<section class="banner">
+    <h1>ชั้นหนังสือ ชั้นประถมศึกษาปีที่ 5</h1>
+    <p>คลังสื่อการเรียนรู้ดิจิทัล โรงเรียนบ้านชายทะเลโคกขามมิตรภาพที่ 95</p>
+</section>
+
+<div class="toolbar">
+    <select>
+        <option>ทุกหมวดหมู่</option>
+    </select>
+
+    <button>+ อัปโหลดหนังสือ</button>
+</div>
+
+<main class="bookshelf" id="bookshelf"></main>
+
+<!-- PDF VIEWER -->
+
+<div id="viewer">
+
+<div class="viewer-header">
+    <button onclick="closeBook()">← กลับ</button>
+    <h3 id="bookTitle"></h3>
+</div>
+
+<iframe id="pdfFrame"></iframe>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Sarabun",sans-serif;
+}
+
+body{
+background:#eef5ff;
+}
+
+/* Header */
+
+.header{
+background:#0d47c9;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:16px 30px;
+gap:20px;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo h2{
+font-size:24px;
+}
+
+.header input{
+flex:1;
+padding:12px 18px;
+border:none;
+border-radius:30px;
+}
+
+.profile{
+font-weight:bold;
+}
+
+/* Banner */
+
+.banner{
+background:linear-gradient(#5fb7ff,#84d7ff);
+padding:30px;
+text-align:center;
+color:#083b8a;
+}
+
+.banner h1{
+font-size:38px;
+margin-bottom:10px;
+}
+
+/* Toolbar */
+
+.toolbar{
+display:flex;
+justify-content:space-between;
+padding:20px 30px;
+}
+
+.toolbar button{
+background:#2563eb;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* Shelf */
+
+.bookshelf{
+background:#b37a2d;
+margin:0 30px 40px;
+padding:25px;
+border-radius:12px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:22px;
+box-shadow:inset 0 0 15px rgba(0,0,0,.25);
+}
+
+.book{
+background:#fff;
+border-radius:8px;
+overflow:hidden;
+cursor:pointer;
+transition:.3s;
+}
+
+.book:hover{
+transform:translateY(-6px);
+}
+
+.cover{
+height:220px;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:#fff;
+font-size:28px;
+font-weight:bold;
+padding:15px;
+}
+
+.info{
+padding:12px;
+}
+
+.info h3{
+font-size:18px;
+margin-bottom:5px;
+}
+
+.info p{
+color:#666;
+font-size:14px;
+}
+
+/* Colors */
+
+.math{background:#16a34a;}
+.sci{background:#2563eb;}
+.thai{background:#f59e0b;}
+.eng{background:#7c3aed;}
+.social{background:#0ea5a4;}
+.art{background:#ec4899;}
+.health{background:#0284c7;}
+.work{background:#65a30d;}
+.tech{background:#ea580c;}
+
+/* Viewer */
+
+#viewer{
+display:none;
+position:fixed;
+inset:0;
+background:#111827;
+flex-direction:column;
+}
+
+.viewer-header{
+background:#0d47c9;
+color:#fff;
+padding:15px;
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.viewer-header button{
+padding:8px 16px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+#pdfFrame{
+width:100%;
+height:100%;
+border:none;
+background:white;
+}
+const books=[
+{
+title:"คณิตศาสตร์ ป.5",
+pdf:"pdf/math5.pdf",
+color:"math",
+icon:"📐"
+},
+{
+title:"วิทยาศาสตร์ ป.5",
+pdf:"pdf/science5.pdf",
+color:"sci",
+icon:"🧪"
+},
+{
+title:"ภาษาไทย ป.5",
+pdf:"pdf/thai5.pdf",
+color:"thai",
+icon:"📖"
+},
+{
+title:"ภาษาอังกฤษ ป.5",
+pdf:"pdf/english5.pdf",
+color:"eng",
+icon:"ABC"
+},
+{
+title:"สังคมศึกษา ป.5",
+pdf:"pdf/social5.pdf",
+color:"social",
+icon:"🌏"
+},
+{
+title:"ศิลปะ ป.5",
+pdf:"pdf/art5.pdf",
+color:"art",
+icon:"🎨"
+},
+{
+title:"สุขศึกษา ป.5",
+pdf:"pdf/health5.pdf",
+color:"health",
+icon:"❤️"
+},
+{
+title:"การงานอาชีพ ป.5",
+pdf:"pdf/work5.pdf",
+color:"work",
+icon:"🛠️"
+},
+{
+title:"เทคโนโลยี ป.5",
+pdf:"pdf/tech5.pdf",
+color:"tech",
+icon:"💻"
+}
+];
+
+const shelf=document.getElementById("bookshelf");
+
+function showBooks(list){
+
+shelf.innerHTML="";
+
+list.forEach(book=>{
+
+shelf.innerHTML+=`
+<div class="book" onclick="openBook('${book.title}','${book.pdf}')">
+
+<div class="cover ${book.color}">
+<div>
+<div style="font-size:48px">${book.icon}</div>
+${book.title}
+</div>
+</div>
+
+<div class="info">
+<h3>${book.title}</h3>
+<p>PDF เอกสารประกอบการเรียน</p>
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+showBooks(books);
+
+/* Search */
+
+document.getElementById("searchBox").addEventListener("keyup",e=>{
+
+const key=e.target.value.toLowerCase();
+
+const result=books.filter(b=>b.title.toLowerCase().includes(key));
+
+showBooks(result);
+
+});
+
+/* Viewer */
+
+function openBook(title,pdf){
+
+document.getElementById("viewer").style.display="flex";
+document.getElementById("bookTitle").innerText=title;
+document.getElementById("pdfFrame").src=pdf;
+
+}
+
+function closeBook(){
+
+document.getElementById("viewer").style.display="none";
+document.getElementById("pdfFrame").src="";
+
+}
